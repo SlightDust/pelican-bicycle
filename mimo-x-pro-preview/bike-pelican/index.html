@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>鹈鹕骑行 · Pelican Pedals</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app" id="app" data-theme="day">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <h1>鹈鹕骑行</h1>
+          <p>Pelican Pedals · 海岸线漫游</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button type="button" class="btn" id="bellBtn" aria-label="按铃">
+          <span class="btn-icon">🔔</span>
+          <span>按铃</span>
+        </button>
+        <button type="button" class="btn" id="themeBtn" aria-label="切换昼夜">
+          <span class="btn-icon" id="themeIcon">🌙</span>
+          <span id="themeLabel">黄昏</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="stage" aria-label="鹈鹕骑自行车场景">
+      <!-- 天空与太阳 -->
+      <div class="layer sky" aria-hidden="true">
+        <div class="sun" id="sun"></div>
+        <div class="cloud cloud-a"></div>
+        <div class="cloud cloud-b"></div>
+        <div class="cloud cloud-c"></div>
+      </div>
+
+      <!-- 远海 -->
+      <div class="layer sea" aria-hidden="true">
+        <div class="wave wave-1"></div>
+        <div class="wave wave-2"></div>
+      </div>
+
+      <!-- 棕榈与远景 -->
+      <div class="layer midground" aria-hidden="true">
+        <div class="palm palm-1"></div>
+        <div class="palm palm-2"></div>
+        <div class="hill"></div>
+      </div>
+
+      <!-- 公路 -->
+      <div class="layer road" aria-hidden="true">
+        <div class="road-surface"></div>
+        <div class="road-lines"></div>
+      </div>
+
+      <!-- 前景草丛 -->
+      <div class="layer foreground" aria-hidden="true">
+        <div class="tuft t1"></div>
+        <div class="tuft t2"></div>
+        <div class="tuft t3"></div>
+      </div>
+
+      <!-- 鹈鹕 + 自行车 -->
+      <div class="rider-wrap" id="riderWrap">
+        <svg class="rider" id="rider" viewBox="0 0 900 480" role="img" aria-label="一只白色鹈鹕骑着珊瑚色自行车">
+          <defs>
+            <linearGradient id="beakGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#F6B26B"/>
+              <stop offset="100%" stop-color="#E67E22"/>
+            </linearGradient>
+            <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FFFDF8"/>
+              <stop offset="100%" stop-color="#F0E6D6"/>
+            </linearGradient>
+            <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#1A2A3A" flood-opacity="0.18"/>
+            </filter>
+          </defs>
+
+          <!-- 地面阴影 -->
+          <ellipse class="ground-shadow" cx="420" cy="430" rx="160" ry="16" fill="#1A2A3A" opacity="0.12"/>
+
+          <!-- 远侧小腿（在车架后） -->
+          <g class="leg leg-far">
+            <line x1="340" y1="360" x2="340" y2="400" stroke="#E67E22" stroke-width="14" stroke-linecap="round"/>
+            <ellipse cx="340" cy="404" rx="16" ry="8" fill="#D35400"/>
+          </g>
+
+          <!-- 自行车 -->
+          <g class="bike" filter="url(#softShadow)">
+            <!-- 后轮 -->
+            <g class="wheel wheel-rear">
+              <circle cx="250" cy="360" r="70" fill="none" stroke="#1A2A3A" stroke-width="10"/>
+              <circle cx="250" cy="360" r="58" fill="none" stroke="#2C3E50" stroke-width="3"/>
+              <g class="spokes">
+                <line x1="250" y1="302" x2="250" y2="418" stroke="#5D6D7E" stroke-width="2"/>
+                <line x1="192" y1="360" x2="308" y2="360" stroke="#5D6D7E" stroke-width="2"/>
+                <line x1="209" y1="319" x2="291" y2="401" stroke="#5D6D7E" stroke-width="2"/>
+                <line x1="209" y1="401" x2="291" y2="319" stroke="#5D6D7E" stroke-width="2"/>
+              </g>
+              <circle cx="250" cy="360" r="10" fill="#E85D4C"/>
+            </g>
+
+            <!-- 前轮 -->
+            <g class="wheel wheel-front">
+              <circle cx="520" cy="360" r="70" fill="none" stroke="#1A2A3A" stroke-width="10"/>
+              <circle cx="520" cy="360" r="58" fill="none" stroke="#2C3E50" stroke-width="3"/>
+              <g class="spokes">
+                <line x1="520" y1="302" x2="520" y2="418" stroke="#5D6D7E" stroke-width="2"/>
+                <line x1="462" y1="360" x2="578" y2="360" stroke="#5D6D7E" stroke-width="2"/>
+                <line x1="479" y1="319" x2="561" y2="401" stroke="#5D6D7E" stroke-width="2"/>
+                <line x1="479" y1="401" x2="561" y2="319" stroke="#5D6D7E" stroke-width="2"/>
+              </g>
+              <circle cx="520" cy="360" r="10" fill="#E85D4C"/>
+            </g>
+
+            <!-- 车架 -->
+            <g class="frame" fill="none" stroke="#E85D4C" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M250 360 L340 360 L400 250 L520 360"/>
+              <path d="M340 360 L380 250"/>
+              <path d="M400 250 L380 250"/>
+              <path d="M250 360 L380 250"/>
+              <path d="M400 250 L470 250 L520 360"/>
+            </g>
+            <!-- 车把 -->
+            <path d="M470 250 L500 230 M470 250 L450 235" fill="none" stroke="#1A2A3A" stroke-width="8" stroke-linecap="round"/>
+            <!-- 车座 -->
+            <path d="M350 248 Q380 238 405 248" fill="none" stroke="#1A2A3A" stroke-width="10" stroke-linecap="round"/>
+            <!-- 脚踏曲柄（与近腿同速旋转） -->
+            <g class="crank">
+              <line x1="340" y1="360" x2="340" y2="400" stroke="#1A2A3A" stroke-width="6" stroke-linecap="round"/>
+              <rect x="328" y="396" width="24" height="8" rx="3" fill="#1A2A3A"/>
+            </g>
+            <!-- 车筐 -->
+            <path d="M500 250 L560 250 L555 290 L505 290 Z" fill="#C9A66B" stroke="#1A2A3A" stroke-width="3"/>
+            <line x1="510" y1="250" x2="510" y2="290" stroke="#1A2A3A" stroke-width="2" opacity="0.35"/>
+            <line x1="530" y1="250" x2="530" y2="290" stroke="#1A2A3A" stroke-width="2" opacity="0.35"/>
+            <line x1="548" y1="250" x2="548" y2="290" stroke="#1A2A3A" stroke-width="2" opacity="0.35"/>
+          </g>
+
+          <!-- 大腿（从身体连到中轴，基本固定） -->
+          <path class="thigh" d="M365 250 Q355 300 340 350" fill="none" stroke="#F4A261" stroke-width="16" stroke-linecap="round"/>
+
+          <!-- 近侧小腿 + 脚（跟着曲柄转） -->
+          <g class="leg leg-near">
+            <line x1="340" y1="360" x2="340" y2="400" stroke="#F4A261" stroke-width="14" stroke-linecap="round"/>
+            <ellipse cx="340" cy="404" rx="18" ry="9" fill="#E67E22"/>
+          </g>
+
+          <!-- 鹈鹕身体 -->
+          <g class="pelican">
+            <!-- 身体 -->
+            <ellipse class="body" cx="360" cy="220" rx="90" ry="70" fill="url(#bodyGrad)" stroke="#1A2A3A" stroke-width="4"/>
+            <!-- 翅膀远侧 -->
+            <path class="wing wing-far" d="M318 205 Q275 235 295 285 Q335 275 355 240 Q340 215 318 205" fill="#EDE0D0" stroke="#1A2A3A" stroke-width="3"/>
+            <!-- 翅膀近侧（伸向车把） -->
+            <path class="wing wing-near" d="M345 205 Q400 215 455 235 L475 248 Q465 262 445 255 Q400 245 355 230 Q340 218 345 205" fill="#FFFDF8" stroke="#1A2A3A" stroke-width="3.5"/>
+            <!-- 翅尖搭在车把上 -->
+            <ellipse cx="478" cy="242" rx="14" ry="9" fill="#FFFDF8" stroke="#1A2A3A" stroke-width="3" transform="rotate(-20 478 242)"/>
+            <!-- 颈 -->
+            <path d="M340 180 Q300 150 310 120" fill="none" stroke="#FFFDF8" stroke-width="36" stroke-linecap="round"/>
+            <path d="M340 180 Q300 150 310 120" fill="none" stroke="#1A2A3A" stroke-width="4" stroke-linecap="round" opacity="0.15"/>
+            <!-- 头 -->
+            <circle class="head" cx="310" cy="115" r="42" fill="#FFFDF8" stroke="#1A2A3A" stroke-width="4"/>
+            <!-- 眼睛 -->
+            <circle cx="325" cy="105" r="10" fill="#1A2A3A"/>
+            <circle cx="328" cy="102" r="3.5" fill="#FFFDF8"/>
+            <!-- 眉毛（一点神气） -->
+            <path d="M318 92 Q330 86 340 92" fill="none" stroke="#1A2A3A" stroke-width="3" stroke-linecap="round"/>
+            <!-- 大喙：上喙 + 喉囊 -->
+            <g class="beak">
+              <!-- 上喙 -->
+              <path d="M342 108 L530 122 L345 138 Z" fill="url(#beakGrad)" stroke="#1A2A3A" stroke-width="4" stroke-linejoin="round"/>
+              <!-- 喉囊（下喙口袋） -->
+              <path class="pouch" d="M345 138 Q380 195 470 175 Q510 160 530 122 Q480 155 400 150 Q360 145 345 138" fill="#F6B26B" stroke="#1A2A3A" stroke-width="3.5" stroke-linejoin="round"/>
+              <!-- 喙缝线 -->
+              <path d="M350 128 L520 124" fill="none" stroke="#C0621A" stroke-width="2" opacity="0.55"/>
+            </g>
+            <!-- 围巾 -->
+            <path class="scarf" d="M330 170 Q360 185 390 175 L395 195 Q360 210 325 195 Z" fill="#3A7CA5" stroke="#1A2A3A" stroke-width="3"/>
+            <path class="scarf-tail" d="M330 190 L300 250 L320 255 L345 200" fill="#2E6B94" stroke="#1A2A3A" stroke-width="2.5"/>
+          </g>
+
+          <!-- 车筐里的鱼（偶尔跳一下） -->
+          <g class="basket-fish">
+            <ellipse cx="530" cy="270" rx="18" ry="9" fill="#7EC8E3" stroke="#1A2A3A" stroke-width="2"/>
+            <path d="M512 270 L500 262 L500 278 Z" fill="#7EC8E3" stroke="#1A2A3A" stroke-width="2"/>
+            <circle cx="538" cy="268" r="2" fill="#1A2A3A"/>
+          </g>
+
+          <!-- 铃铛波纹 -->
+          <g class="bell-rings" id="bellRings" opacity="0">
+            <circle cx="490" cy="228" r="14" fill="none" stroke="#F4D35E" stroke-width="3"/>
+            <circle cx="490" cy="228" r="26" fill="none" stroke="#F4D35E" stroke-width="2" opacity="0.6"/>
+            <circle cx="490" cy="228" r="38" fill="none" stroke="#F4D35E" stroke-width="2" opacity="0.3"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- 音符（按铃时） -->
+      <div class="notes" id="notes" aria-hidden="true"></div>
+    </main>
+
+    <section class="panel">
+      <div class="panel-main">
+        <label class="slider-label" for="speedRange">
+          <span class="slider-title">骑行速度</span>
+          <span class="slider-value"><strong id="speedValue">6</strong> km/h</span>
+        </label>
+        <input
+          type="range"
+          id="speedRange"
+          class="speed-range"
+          min="0"
+          max="20"
+          step="0.5"
+          value="6"
+          aria-valuemin="0"
+          aria-valuemax="20"
+          aria-valuenow="6"
+          aria-valuetext="每小时 6 公里"
+        />
+        <div class="speed-marks" aria-hidden="true">
+          <span>散步</span>
+          <span>巡航</span>
+          <span>冲刺</span>
+        </div>
+      </div>
+
+      <div class="stats" aria-live="polite">
+        <div class="stat">
+          <span class="stat-label">里程</span>
+          <span class="stat-value"><span id="distance">0.00</span><small> km</small></span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">状态</span>
+          <span class="stat-value" id="mood">悠哉巡航</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">喉囊</span>
+          <span class="stat-value" id="fishCount">1 条鱼</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>拖动滑块改变速度 · 点「按铃」让鹈鹕得意一下 · 切换黄昏看夕阳</p>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

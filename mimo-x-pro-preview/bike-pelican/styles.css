@@ -1,0 +1,849 @@
+/* 鹈鹕骑行 — 扁平海岸插画 */
+
+:root {
+  --sky-day: #7EC8E3;
+  --sky-sunset: #F4A261;
+  --sky-night: #1B2A4A;
+  --sea: #3A7CA5;
+  --sea-deep: #2E6B94;
+  --sand: #F5E6C8;
+  --paper: #FFF8F0;
+  --coral: #E85D4C;
+  --beak: #F4A261;
+  --ink: #1A2A3A;
+  --muted: #5D6D7E;
+  --sun: #F4D35E;
+  --grass: #6BAF6B;
+  --panel: rgba(255, 248, 240, 0.92);
+  --ride-duration: 1.2s;
+  --wheel-duration: 0.9s;
+  --road-duration: 1.6s;
+  --cloud-duration: 28s;
+  --font-display: "Avenir Next", "Trebuchet MS", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-body: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #0f1720;
+  color: var(--ink);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  background: var(--paper);
+  overflow: hidden;
+  max-width: 100vw;
+  overflow-x: clip;
+}
+
+/* ── 顶栏 ─────────────────────────────── */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.25rem;
+  background: var(--panel);
+  border-bottom: 1px solid rgba(26, 42, 58, 0.08);
+  position: relative;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 30% 30%, #fff 0 18%, transparent 19%),
+    linear-gradient(135deg, var(--sky-day), var(--sea));
+  border: 3px solid var(--ink);
+  flex-shrink: 0;
+}
+
+.brand h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.brand p {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 2.5px solid var(--ink);
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 2px 0 rgba(26, 42, 58, 0.15);
+}
+
+.btn:hover {
+  background: #FFF3E0;
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--sea);
+  outline-offset: 2px;
+}
+
+.btn-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* ── 舞台 ─────────────────────────────── */
+
+.stage {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--sky-day) 0%, #B8E0F0 55%, var(--sand) 55%);
+  transition: background 0.8s ease;
+}
+
+.app[data-theme="sunset"] .stage {
+  background: linear-gradient(180deg, #F4A261 0%, #E8A87C 40%, #C38D9E 55%, var(--sand) 55%);
+}
+
+.app[data-theme="night"] .stage {
+  background: linear-gradient(180deg, #0F1C33 0%, #1B2A4A 45%, #2A3F5F 55%, #3D4F3A 55%);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* 太阳 / 月亮 */
+.sun {
+  position: absolute;
+  top: 8%;
+  right: 12%;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff6c8, var(--sun) 55%, #f0b429);
+  box-shadow: 0 0 40px rgba(244, 211, 94, 0.55);
+  transition: background 0.8s ease, box-shadow 0.8s ease, transform 0.8s ease;
+}
+
+.app[data-theme="sunset"] .sun {
+  top: 28%;
+  background: radial-gradient(circle at 35% 35%, #ffe0a3, #E76F51 60%, #9B2226);
+  box-shadow: 0 0 50px rgba(231, 111, 81, 0.5);
+  transform: scale(1.15);
+}
+
+.app[data-theme="night"] .sun {
+  top: 10%;
+  right: 14%;
+  width: 52px;
+  height: 52px;
+  background: radial-gradient(circle at 35% 35%, #f5f5f5, #d6d6d6 60%, #bdbdbd);
+  box-shadow: 0 0 30px rgba(220, 220, 220, 0.35);
+  transform: scale(0.9);
+}
+
+.app[data-theme="night"] .sun::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--sky-night);
+}
+
+/* 云 */
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 40px;
+  animation: cloud-drift var(--cloud-duration) linear infinite;
+}
+
+.app[data-theme="night"] .cloud {
+  background: rgba(180, 200, 230, 0.18);
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.cloud-a {
+  top: 12%;
+  left: -120px;
+  width: 110px;
+  height: 36px;
+  animation-duration: 32s;
+}
+.cloud-a::before { width: 48px; height: 48px; top: -22px; left: 18px; }
+.cloud-a::after  { width: 36px; height: 36px; top: -14px; left: 52px; }
+
+.cloud-b {
+  top: 22%;
+  left: -180px;
+  width: 150px;
+  height: 42px;
+  animation-duration: 40s;
+  animation-delay: -12s;
+  opacity: 0.85;
+}
+.cloud-b::before { width: 60px; height: 60px; top: -28px; left: 28px; }
+.cloud-b::after  { width: 44px; height: 44px; top: -18px; left: 78px; }
+
+.cloud-c {
+  top: 8%;
+  left: -100px;
+  width: 80px;
+  height: 28px;
+  animation-duration: 24s;
+  animation-delay: -6s;
+  opacity: 0.7;
+}
+.cloud-c::before { width: 36px; height: 36px; top: -16px; left: 14px; }
+.cloud-c::after  { width: 28px; height: 28px; top: -10px; left: 40px; }
+
+@keyframes cloud-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(100vw + 280px)); }
+}
+
+/* 海面 */
+.sea {
+  top: 48%;
+  height: 18%;
+  background: linear-gradient(180deg, var(--sea) 0%, var(--sea-deep) 100%);
+  opacity: 0.9;
+}
+
+.app[data-theme="night"] .sea {
+  background: linear-gradient(180deg, #1a3a55 0%, #0f2740 100%);
+}
+
+.wave {
+  position: absolute;
+  left: -20%;
+  width: 140%;
+  height: 18px;
+  background-repeat: repeat-x;
+  background-size: 80px 18px;
+  opacity: 0.35;
+  animation: wave-slide 3.5s linear infinite;
+}
+
+.wave-1 {
+  top: 20%;
+  background-image: radial-gradient(ellipse 30px 10px at 40px 10px, #fff 0 55%, transparent 56%);
+}
+
+.wave-2 {
+  top: 55%;
+  animation-duration: 5s;
+  animation-direction: reverse;
+  background-image: radial-gradient(ellipse 24px 8px at 40px 8px, #fff 0 55%, transparent 56%);
+  opacity: 0.22;
+}
+
+@keyframes wave-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(80px); }
+}
+
+/* 中景：山丘 + 棕榈 */
+.midground {
+  top: 42%;
+  bottom: 18%;
+}
+
+.hill {
+  position: absolute;
+  left: 5%;
+  bottom: 0;
+  width: 42%;
+  height: 55%;
+  background: #8FBC8F;
+  border-radius: 50% 50% 0 0;
+  opacity: 0.45;
+  animation: hill-drift calc(var(--road-duration) * 4) linear infinite;
+}
+
+.app[data-theme="night"] .hill {
+  background: #2d4a3a;
+  opacity: 0.7;
+}
+
+@keyframes hill-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-35vw); }
+}
+
+.palm {
+  position: absolute;
+  bottom: 5%;
+  width: 8px;
+  height: 90px;
+  background: #8B5A2B;
+  border-radius: 4px;
+  animation: palm-drift calc(var(--road-duration) * 3.2) linear infinite;
+}
+
+.palm::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 70px;
+  height: 40px;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(ellipse 22px 14px at 18px 22px, var(--grass) 0 70%, transparent 71%),
+    radial-gradient(ellipse 22px 14px at 52px 22px, var(--grass) 0 70%, transparent 71%),
+    radial-gradient(ellipse 18px 12px at 35px 8px, #7BC47B 0 70%, transparent 71%);
+}
+
+.palm-1 { left: 72%; }
+.palm-2 { left: 110%; animation-delay: -4s; height: 110px; }
+
+@keyframes palm-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-130vw); }
+}
+
+/* 公路 */
+.road {
+  top: auto;
+  bottom: 0;
+  height: 22%;
+  overflow: hidden;
+}
+
+.road-surface {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #4A5568 0%, #2D3748 100%);
+  border-top: 6px solid #718096;
+}
+
+.app[data-theme="night"] .road-surface {
+  background: linear-gradient(180deg, #1a1f2a 0%, #0d1117 100%);
+  border-top-color: #2d3748;
+}
+
+.road-lines {
+  position: absolute;
+  top: 48%;
+  left: 0;
+  width: 200%;
+  height: 10px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--sun) 0 48px,
+    transparent 48px 100px
+  );
+  animation: road-scroll var(--road-duration) linear infinite;
+}
+
+@keyframes road-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100px); }
+}
+
+/* 前景草 */
+.foreground {
+  top: auto;
+  bottom: 18%;
+  height: 40px;
+  overflow: hidden;
+}
+
+.tuft {
+  position: absolute;
+  bottom: 0;
+  width: 28px;
+  height: 22px;
+  background:
+    radial-gradient(ellipse 8px 18px at 8px 10px, var(--grass) 0 70%, transparent 71%),
+    radial-gradient(ellipse 7px 16px at 18px 8px, #7BC47B 0 70%, transparent 71%);
+  animation: palm-drift calc(var(--road-duration) * 1.4) linear infinite;
+}
+
+.t1 { left: 30%; }
+.t2 { left: 58%; animation-delay: -2s; }
+.t3 { left: 85%; animation-delay: -5s; }
+
+/* ── 骑行主体 ─────────────────────────── */
+
+.rider-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  width: min(720px, 92vw);
+  transform: translateX(-50%);
+  z-index: 5;
+  animation: body-bob var(--ride-duration) ease-in-out infinite;
+  filter: drop-shadow(0 8px 0 rgba(26, 42, 58, 0.08));
+}
+
+.rider {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+@keyframes body-bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-6px); }
+}
+
+/* 车轮旋转 — 以轮心为轴 */
+.wheel .spokes {
+  animation: spin var(--wheel-duration) linear infinite;
+  transform-box: view-box;
+}
+
+.wheel-rear .spokes {
+  transform-origin: 250px 360px;
+}
+
+.wheel-front .spokes {
+  transform-origin: 520px 360px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 曲柄 + 腿 — 以中轴为轴 */
+.crank,
+.leg-near,
+.leg-far {
+  transform-box: view-box;
+  transform-origin: 340px 360px;
+  animation: pedal var(--ride-duration) linear infinite;
+}
+
+.leg-far {
+  animation-delay: calc(var(--ride-duration) / -2);
+  opacity: 0.85;
+}
+
+@keyframes pedal {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* 围巾飘动 */
+.scarf-tail {
+  transform-origin: 330px 190px;
+  animation: scarf-wave calc(var(--ride-duration) * 1.1) ease-in-out infinite;
+}
+
+@keyframes scarf-wave {
+  0%, 100% { transform: rotate(-4deg); }
+  50%      { transform: rotate(8deg); }
+}
+
+/* 喉囊微鼓 */
+.pouch {
+  transform-origin: 360px 145px;
+  animation: pouch-sway calc(var(--ride-duration) * 2) ease-in-out infinite;
+}
+
+@keyframes pouch-sway {
+  0%, 100% { transform: scaleY(1); }
+  50%      { transform: scaleY(1.08); }
+}
+
+/* 筐里的鱼 */
+.basket-fish {
+  animation: fish-hop 3.2s ease-in-out infinite;
+  transform-origin: 530px 270px;
+}
+
+@keyframes fish-hop {
+  0%, 70%, 100% { transform: translateY(0) rotate(0deg); }
+  78%           { transform: translateY(-16px) rotate(-12deg); }
+  86%           { transform: translateY(0) rotate(4deg); }
+}
+
+/* 铃铛 */
+.bell-rings.ringing {
+  animation: bell-pop 0.7s ease-out;
+}
+
+@keyframes bell-pop {
+  0%   { opacity: 0; transform: scale(0.6); }
+  30%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.6); }
+}
+
+.rider-wrap.ringing {
+  animation: body-bob var(--ride-duration) ease-in-out infinite, ring-shake 0.35s ease;
+}
+
+@keyframes ring-shake {
+  0%, 100% { filter: drop-shadow(0 8px 0 rgba(26, 42, 58, 0.08)); }
+  25%      { filter: drop-shadow(0 8px 0 rgba(244, 211, 94, 0.5)); }
+}
+
+/* 音符 */
+.notes {
+  position: absolute;
+  left: 58%;
+  top: 28%;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.note {
+  position: absolute;
+  font-size: 1.4rem;
+  color: var(--sun);
+  text-shadow: 0 1px 0 var(--ink);
+  animation: note-float 1.2s ease-out forwards;
+}
+
+@keyframes note-float {
+  from { opacity: 1; transform: translate(0, 0) scale(1); }
+  to   { opacity: 0; transform: translate(var(--nx, 20px), var(--ny, -60px)) scale(1.3); }
+}
+
+/* ── 控制面板 ─────────────────────────── */
+
+.panel {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.25rem;
+  padding: 1.1rem 1.25rem 1rem;
+  background: var(--panel);
+  border-top: 1px solid rgba(26, 42, 58, 0.08);
+  position: relative;
+  z-index: 10;
+}
+
+.panel-main {
+  min-width: 0;
+}
+
+.slider-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.55rem;
+}
+
+.slider-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.slider-value {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.slider-value strong {
+  color: var(--coral);
+  font-size: 1.15rem;
+  font-family: var(--font-display);
+}
+
+.speed-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sky-day), var(--coral));
+  border: 2px solid var(--ink);
+  outline: none;
+  cursor: pointer;
+}
+
+.speed-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--ink);
+  box-shadow: 0 2px 0 rgba(26, 42, 58, 0.2);
+  cursor: grab;
+}
+
+.speed-range::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--ink);
+  cursor: grab;
+}
+
+.speed-range:focus-visible {
+  outline: 3px solid var(--sea);
+  outline-offset: 3px;
+}
+
+.speed-marks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  align-content: center;
+}
+
+.stat {
+  background: #fff;
+  border: 2px solid rgba(26, 42, 58, 0.12);
+  border-radius: 14px;
+  padding: 0.55rem 0.65rem;
+  min-width: 0;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.06em;
+}
+
+.stat-value {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-value small {
+  font-weight: 500;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+/* ── 页脚 ─────────────────────────────── */
+
+.footer {
+  padding: 0.65rem 1.25rem 0.9rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--muted);
+  background: var(--panel);
+  border-top: 1px solid rgba(26, 42, 58, 0.06);
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* ── 静止状态 ─────────────────────────── */
+
+.app.is-idle .rider-wrap,
+.app.is-idle .wheel .spokes,
+.app.is-idle .crank,
+.app.is-idle .leg-near,
+.app.is-idle .leg-far,
+.app.is-idle .scarf-tail,
+.app.is-idle .pouch,
+.app.is-idle .road-lines,
+.app.is-idle .palm,
+.app.is-idle .hill,
+.app.is-idle .tuft,
+.app.is-idle .wave,
+.app.is-idle .basket-fish {
+  animation-play-state: paused !important;
+}
+
+/* ── 响应式 ───────────────────────────── */
+
+@media (max-width: 720px) {
+  .topbar {
+    flex-wrap: wrap;
+    padding: 0.75rem 0.9rem;
+  }
+
+  .brand {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .brand h1 {
+    font-size: 1.05rem;
+  }
+
+  .brand p {
+    font-size: 0.7rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .topbar-actions {
+    flex: 0 0 auto;
+  }
+
+  .panel {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    padding: 0.9rem;
+  }
+
+  .stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+
+  .stat {
+    padding: 0.45rem 0.5rem;
+    border-radius: 12px;
+  }
+
+  .stat-value {
+    font-size: 0.85rem;
+  }
+
+  .stage {
+    min-height: 320px;
+  }
+
+  .sun {
+    width: 52px;
+    height: 52px;
+  }
+
+  .footer {
+    padding: 0.55rem 0.9rem 0.75rem;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .topbar-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .topbar-actions .btn {
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  .brand p {
+    white-space: normal;
+  }
+
+  .stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stat-value {
+    font-size: 0.8rem;
+  }
+
+  .speed-marks {
+    font-size: 0.68rem;
+  }
+}
+
+/* ── 动效偏好 ─────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .cloud,
+  .wave,
+  .hill,
+  .palm,
+  .tuft,
+  .road-lines,
+  .rider-wrap,
+  .wheel .spokes,
+  .crank,
+  .leg-near,
+  .leg-far,
+  .scarf-tail,
+  .pouch,
+  .basket-fish,
+  .note {
+    animation: none !important;
+  }
+}
