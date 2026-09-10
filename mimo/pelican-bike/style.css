@@ -1,0 +1,139 @@
+:root {
+  --ink: #1f2a37;
+  --card: rgba(255, 255, 255, 0.72);
+  --accent: #ff7a45;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  background: #87ceeb;
+  color: var(--ink);
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#stage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+#stage:active {
+  cursor: grabbing;
+}
+
+.hud {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 28px rgba(31, 42, 55, 0.12);
+  pointer-events: none;
+  user-select: none;
+}
+
+.hud h1 {
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.hud .sub {
+  margin-top: 4px;
+  font-size: 12px;
+  opacity: 0.65;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.controls {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  display: flex;
+  gap: 10px;
+}
+
+.controls button {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(31, 42, 55, 0.12);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.controls button:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.controls button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.tips {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: rgba(31, 42, 55, 0.7);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .hud {
+    top: 12px;
+    left: 12px;
+    padding: 10px 12px;
+  }
+
+  .controls {
+    top: auto;
+    bottom: 52px;
+    right: 12px;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .tips {
+    bottom: 12px;
+    font-size: 11px;
+  }
+}
