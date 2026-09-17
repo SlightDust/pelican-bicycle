@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鹈鹕骑行·孙悟空大飞机·北极熊打螺丝</title>
+<style>
+html,body{margin:0;padding:0;background:#dceef2;}
+.stage{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;}
+svg{width:100%;height:100%;display:block;}
+</style>
+</head>
+<body>
+<div class="stage">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" role="img" aria-label="鹈鹕骑自行车在孙悟空开的飞机机翼上，翅膀托着北极熊，秦始皇骑在熊背打螺丝">
+<defs>
+<linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#7fc4e8"/><stop offset="1" stop-color="#eaf7fb"/>
+</linearGradient>
+<linearGradient id="g-sea" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#3f7fae"/><stop offset="1" stop-color="#2b5e86"/>
+</linearGradient>
+<linearGradient id="g-fus" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#aebccb"/>
+</linearGradient>
+<linearGradient id="g-wing" x1="0" y1="0" x2="1" y2="0.3">
+<stop offset="0" stop-color="#eef3f7"/><stop offset="1" stop-color="#9db0c1"/>
+</linearGradient>
+<radialGradient id="g-sun" cx="0.5" cy="0.5" r="0.5">
+<stop offset="0" stop-color="#fff3c4"/><stop offset="1" stop-color="#ffb84d"/>
+</radialGradient>
+<linearGradient id="g-cloud" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dceaf2"/>
+</linearGradient>
+<linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#c98a1e"/>
+</linearGradient>
+<linearGradient id="g-fur" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9e1ea"/>
+</linearGradient>
+<linearGradient id="g-robe" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#2e2a28"/><stop offset="1" stop-color="#151312"/>
+</linearGradient>
+</defs>
+<style>
+@keyframes planeBob{0%,100%{transform:translate(0,0)}50%{transform:translate(0,-12px)}}
+@keyframes wheelSpin{to{transform:rotate(360deg)}}
+@keyframes wingFlap{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-5deg)}}
+@keyframes cloudDrift{from{transform:translateX(0)}to{transform:translateX(-1560px)}}
+@keyframes screwTwist{0%,100%{transform:rotate(0deg)}50%{transform:rotate(180deg)}}
+@keyframes armPump{0%,100%{transform:rotate(0deg)}50%{transform:rotate(7deg)}}
+@keyframes dashFlow{to{stroke-dashoffset:-84}}
+@keyframes scarfWave{0%,100%{transform:skewY(0deg)}50%{transform:skewY(7deg)}}
+@keyframes bearBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+#plane-bob{animation:planeBob 4.5s ease-in-out infinite}
+#wheel-front,#wheel-rear{animation:wheelSpin 1.4s linear infinite;transform-box:fill-box;transform-origin:center}
+#pelican-wings{animation:wingFlap 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 15%}
+.cloud-move{animation:cloudDrift 26s linear infinite}
+#screw-bit{animation:screwTwist .5s linear infinite;transform-box:fill-box;transform-origin:center}
+#qin-arm{animation:armPump .8s ease-in-out infinite;transform-box:fill-box;transform-origin:80% 10%}
+#speed-lines{stroke-dasharray:24 18;animation:dashFlow .7s linear infinite}
+#scarf{animation:scarfWave 1.7s ease-in-out infinite;transform-box:fill-box;transform-origin:left center}
+#bear-head{animation:bearBob 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center bottom}
+</style>
+<g id="scene-sky">
+<rect width="1400" height="1000" fill="url(#g-sky)"/>
+<circle cx="1180" cy="150" r="88" fill="url(#g-sun)"/>
+<circle cx="1180" cy="150" r="112" fill="#ffdf8e" opacity="0.35"/>
+<g class="cloud-move" opacity="0.92">
+<g>
+<ellipse cx="180" cy="210" rx="120" ry="46" fill="url(#g-cloud)"/>
+<ellipse cx="250" cy="188" rx="90" ry="40" fill="url(#g-cloud)"/>
+<ellipse cx="112" cy="192" rx="70" ry="34" fill="url(#g-cloud)"/>
+</g>
+<g>
+<ellipse cx="860" cy="128" rx="110" ry="40" fill="url(#g-cloud)"/>
+<ellipse cx="932" cy="110" rx="76" ry="32" fill="url(#g-cloud)"/>
+</g>
+<g>
+<ellipse cx="1340" cy="330" rx="100" ry="36" fill="url(#g-cloud)"/>
+<ellipse cx="1404" cy="312" rx="64" ry="28" fill="url(#g-cloud)"/>
+</g>
+<g>
+<ellipse cx="560" cy="70" rx="90" ry="30" fill="url(#g-cloud)" opacity="0.85"/>
+</g>
+<g>
+<ellipse cx="1720" cy="210" rx="120" ry="46" fill="url(#g-cloud)"/>
+<ellipse cx="1790" cy="188" rx="90" ry="40" fill="url(#g-cloud)"/>
+<ellipse cx="1652" cy="192" rx="70" ry="34" fill="url(#g-cloud)"/>
+</g>
+<g>
+<ellipse cx="2400" cy="128" rx="110" ry="40" fill="url(#g-cloud)"/>
+<ellipse cx="2472" cy="110" rx="76" ry="32" fill="url(#g-cloud)"/>
+</g>
+</g>
+<rect y="820" width="1400" height="180" fill="url(#g-sea)"/>
+<g stroke="#ffffff" stroke-width="3" opacity="0.35" stroke-linecap="round" fill="none">
+<path d="M60 862h70M210 882h50M380 856h80M560 886h60M760 862h70M950 882h50M1120 856h80M1290 886h60"/>
+<path d="M120 916h60M300 932h70M520 912h50M700 936h60M900 916h70M1100 932h50M1260 912h70"/>
+</g>
+</g>
+<g id="airplane">
+<g id="plane-bob">
+<path d="M330 588 C420 560 560 536 700 528 C840 520 980 522 1100 540 L1100 470 C980 452 840 452 700 462 C560 472 420 496 330 540 Z" fill="url(#g-fus)"/>
+<path d="M330 540 C420 496 560 472 700 462 C840 452 980 452 1100 470 L1100 488 C980 470 840 470 700 480 C560 490 420 514 330 556 Z" fill="#c3ced9"/>
+<path d="M690 528 C660 500 664 468 700 462 C736 456 764 478 758 510 C754 520 720 526 690 528 Z" fill="#dbe4ec"/>
+<rect x="676" y="470" width="52" height="36" rx="8" fill="#7fa8c4"/>
+<path d="M330 540 L240 560 C228 563 224 574 232 582 L330 588 Z" fill="#e05c4a"/>
+<path d="M336 586 L268 596 C258 598 256 586 264 582 L336 566 Z" fill="#c94f40"/>
+<path d="M1100 540 L1180 548 L1180 560 L1100 556 Z" fill="#9fb0c0"/>
+<circle cx="380" cy="576" r="5" fill="#5d7285"/>
+<circle cx="440" cy="568" r="5" fill="#5d7285"/>
+<circle cx="500" cy="560" r="5" fill="#5d7285"/>
+<circle cx="560" cy="552" r="5" fill="#5d7285"/>
+<circle cx="620" cy="546" r="5" fill="#5d7285"/>
+<circle cx="680" cy="540" r="5" fill="#5d7285"/>
+<g id="wing">
+<path d="M700 560 C760 548 900 540 1040 544 C1120 546 1180 556 1210 570 C1180 592 1080 606 960 608 C840 610 740 596 700 578 Z" fill="url(#g-wing)"/>
+<path d="M700 578 C740 596 840 610 960 608 C1080 606 1180 592 1210 570 L1210 578 C1180 600 1080 614 960 616 C840 618 740 604 700 586 Z" fill="#7e93a8"/>
+<path d="M1000 552 L1020 470 L1044 470 L1058 554 Z" fill="#93a6b8"/>
+</g>
+</g>
+</g>
+<g id="speed-lines" stroke="#ffffff" stroke-width="6" opacity="0.55" fill="none" stroke-linecap="round">
+<path d="M120 640 h180 M60 700 h150 M150 760 h200 M90 470 h160 M200 420 h140"/>
+</g>
+<g id="pelican">
+<ellipse cx="470" cy="470" rx="74" ry="56" fill="url(#g-fur)"/>
+<circle cx="540" cy="404" r="40" fill="#ffffff"/>
+<path d="M576 396 C640 388 660 410 652 424 C636 438 596 428 576 420 Z" fill="#f5a623"/>
+<circle cx="548" cy="396" r="6" fill="#26313c"/>
+<path d="M560 436 C600 444 640 470 640 500 L596 502 C570 480 548 462 540 448 Z" fill="#f5a623" opacity="0.9"/>
+<g id="pelican-wings">
+<path d="M420 452 C340 410 300 420 250 460 C310 470 360 486 420 500 Z" fill="#e9eef4" stroke="#b9c6d3" stroke-width="3"/>
+<path d="M430 500 C350 520 320 552 300 600 C370 580 420 556 460 528 Z" fill="#dde6ef" stroke="#b9c6d3" stroke-width="3"/>
+</g>
+<path d="M430 520 C470 560 500 586 520 616 L480 640 C452 600 430 566 414 540 Z" fill="#e88b3a"/>
+<g id="scarf">
+<path d="M530 440 C580 430 620 440 660 470 C620 462 580 460 536 456 Z" fill="#e05c4a"/>
+</g>
+<g id="bicycle">
+<circle id="wheel-rear" cx="400" cy="640" r="52" fill="none" stroke="#2e3a46" stroke-width="9"/>
+<circle id="wheel-front" cx="560" cy="640" r="52" fill="none" stroke="#2e3a46" stroke-width="9"/>
+<path d="M400 640 L470 640 L430 560 Z M560 640 L470 640 L430 560 M430 560 L486 548 M486 548 L560 640" fill="none" stroke="#c94f40" stroke-width="7" stroke-linecap="round"/>
+<path d="M486 548 L476 522 L500 516" fill="none" stroke="#2e3a46" stroke-width="7" stroke-linecap="round"/>
+<circle cx="470" cy="640" r="10" fill="#2e3a46"/>
+<circle cx="430" cy="560" r="8" fill="#2e3a46"/>
+</g>
+</g>
+<g id="bear" transform="translate(760 380)">
+<g id="bear-body">
+<ellipse cx="90" cy="120" rx="110" ry="88" fill="url(#g-fur)"/>
+<ellipse cx="90" cy="150" rx="80" ry="52" fill="#eef2f7"/>
+<ellipse cx="20" cy="130" rx="26" ry="40" fill="#ffffff" transform="rotate(20 20 130)"/>
+<ellipse cx="160" cy="130" rx="26" ry="40" fill="#ffffff" transform="rotate(-20 160 130)"/>
+</g>
+<g id="bear-head">
+<circle cx="90" cy="30" r="46" fill="#ffffff"/>
+<circle cx="58" cy="-4" r="14" fill="#ffffff"/>
+<circle cx="122" cy="-4" r="14" fill="#ffffff"/>
+<circle cx="58" cy="-4" r="6" fill="#26313c"/>
+<circle cx="122" cy="-4" r="6" fill="#26313c"/>
+<ellipse cx="90" cy="26" rx="16" ry="12" fill="#26313c"/>
+<path d="M74 46 Q90 58 106 46" fill="none" stroke="#26313c" stroke-width="4" stroke-linecap="round"/>
+</g>
+<g id="qin" transform="translate(60 -40)">
+<ellipse cx="60" cy="60" rx="42" ry="50" fill="url(#g-robe)"/>
+<circle cx="60" cy="10" r="22" fill="#f0c8a0"/>
+<path d="M38 2 Q60 -18 82 2 L82 12 Q60 0 38 12 Z" fill="#1b1815"/>
+<rect x="34" y="-6" width="52" height="10" rx="5" fill="#1b1815"/>
+<circle cx="52" cy="8" r="3" fill="#26313c"/>
+<circle cx="68" cy="8" r="3" fill="#26313c"/>
+<path d="M44 24 Q60 32 76 24" fill="none" stroke="#3a2e24" stroke-width="3" stroke-linecap="round"/>
+<g id="qin-arm">
+<rect x="86" y="40" width="40" height="12" rx="6" fill="#2e2a28" transform="rotate(18 86 40)"/>
+<g id="screw-bit" transform="translate(126 52)">
+<rect x="-4" y="-4" width="8" height="8" fill="#9aa7b4"/>
+<path d="M-6 -6 L6 6 M-6 6 L6 -6" stroke="#6d7a88" stroke-width="2"/>
+</g>
+</g>
+<circle cx="60" cy="112" r="12" fill="url(#g-gold)"/>
+</g>
+</g>
+</svg>
+
+</div>
+</body>
+</html>
